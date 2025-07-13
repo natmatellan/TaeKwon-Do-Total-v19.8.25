@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaeKwon-Do Total</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #2c2c2c, #3f3f3f);
+  color: #fff;
+}
+
+
+    @keyframes gradientBG {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .particles-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 25px 25px;
+      animation: floatParticles 25s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes floatParticles {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100px, -100px); }
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background-color: rgba(0,0,0,0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    nav ul {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.2rem 1rem;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #3399ff;
+      left: 0;
+      bottom: -5px;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3399ff;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    header.hero-carousel-slide {
+      position: relative;
+      overflow: hidden;
+      height: 90vh;
+      background-color: transparent;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: 300vw;
+      height: 100%;
+      animation: slideCarousel 15s infinite ease-in-out;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100%;
+      flex-shrink: 0;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+    }
+
+    @keyframes slideCarousel {
+      0%, 10%    { transform: translateX(0vw); }
+      30%, 40%   { transform: translateX(-100vw); }
+      60%, 70%   { transform: translateX(-200vw); }
+      90%, 100%  { transform: translateX(0vw); }
+    }
+
+    .carousel-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 10px #000;
+      z-index: 10;
+      padding: 1rem;
+    }
+
+    .carousel-text h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .carousel-text p {
+      font-size: 1.6rem;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #3399ff;
+      border-left: 4px solid #3399ff;
+      padding-left: 0.7rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+.eventos-grid {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.columna-izquierda, .columna-derecha {
+  flex: 1;
+  min-width: 300px;
+}
+
+.evento-box {
+  background: linear-gradient(145deg, #2e2e2e, #3b3b3b);
+  border: 1px solid #5c5c5c;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 10px;
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.05),
+    0 0 20px rgba(0, 0, 0, 0.4) inset;
+  color: #ccc;
+  font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover con efecto futurista */
+.evento-box:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 12px rgba(150, 150, 150, 0.2),
+    0 0 30px rgba(100, 100, 100, 0.4) inset;
+  border-color: #888;
+  cursor: pointer;
+}
+
+/* Opcional: bordes de texto suaves */
+.evento-box p {
+  margin: 8px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+
+.evento-box.en-vivo {
+  border: 1px solid #ff4444;
+  box-shadow:
+    0 0 10px rgba(255, 68, 68, 0.4),
+    0 0 30px rgba(255, 0, 0, 0.2) inset;
+}
+
+
+
+.neon-parpadeo {
+  color: #39ff14;
+  font-weight: bold;
+  text-shadow:
+    0 0 0px #39ff14,
+    0 0 5px #39ff14,
+    0 0 10px #39ff14;
+  animation: parpadeoNeon 0.5s infinite alternate;
+}
+
+@keyframes parpadeoNeon {
+  0% {
+    opacity: 15;
+    text-shadow:
+      0 0 0px #39ff14,
+      0 0 5px #39ff14,
+      0 0 10px #39ff14;
+  }
+  100% {
+    opacity: 0.1;
+    text-shadow:
+      0 0 2px #39ff14,
+      0 0 4px #39ff14,
+      0 0 6px #39ff14;
+  }
+}
+
+  border-color: #39ff14;
+  box-shadow:
+    0 0 10px rgba(57, 255, 20, 0.6),
+    0 0 30px rgba(57, 255, 20, 0.3) inset;
+}
+
+
+.evento-box {
+  background: linear-gradient(145deg, #2e2e2e, #3b3b3b);
+  border: 1px solid #5c5c5c;
+  border-radius: 16px;
+  overflow: hidden; /* Esto asegura que nada se desborde */
+  margin-top: 10px;
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.05),
+    0 0 20px rgba(0, 0, 0, 0.4) inset;
+  color: #ccc;
+  font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.evento-box:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 12px rgba(150, 150, 150, 0.2),
+    0 0 30px rgba(100, 100, 100, 0.4) inset;
+  border-color: #888;
+  cursor: pointer;
+}
+
+.evento-box img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover; /* Asegura que no se deforme */
+  display: block;
+}
+
+.evento-contenido {
+  padding: 1rem;
+}
+
+
+    .btn {
+      background-color: #3399ff;
+      color: #fff;
+      padding: 0.7rem 1.4rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 0 transparent;
+    }
+
+    .btn:hover {
+      background-color: #1f7de4;
+      box-shadow: 0 0 15px #3399ff99;
+      transform: scale(1.03);
+    }
+
+    .atleta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    input, select {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      background: #222;
+      color: #fff;
+    }
+
+    footer {
+      background: rgba(0,0,0,0.6);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: #777;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+.evento-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+
+
+
+  </style>
+</head>
+
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#reglamentos">Reglamentos</a></li>
+      <li><a href="#atletas">Atletas</a></li>
+      <li><a href="#torneos">Torneos</a></li>
+      <li><a href="#inscripciones">Inscripciones</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero-carousel-slide">
+    <div class="carousel-track">
+      <div class="slide" style="background-image: url('https://i.pinimg.com/736x/a5/f2/cd/a5f2cdb2c2d0e816f03f811587c8662e.jpg');"></div>
+      <div class="slide" style="background-image: url('https://i.pinimg.com/736x/e1/4c/43/e14c432c238a50bd2ffc0fa37559d9a3.jpg');"></div>
+      <div class="slide" style="background-image: url('https://i.pinimg.com/736x/a3/fa/67/a3fa671aa4f28ea0e97dcc941e68956a.jpg');"></div>
+    </div>
+    <div class="carousel-text">
+      <h1>TaeKwon-Do Total</h1>
+      <p>Todo el universo del Taekwon-Do en un solo lugar</p>
+    </div>
+  </header>
+
+<section id="eventos" class="eventos-grid" class="evento-box en-vivo">
+  <div class="columna-izquierda">
+  <a href="liveEvent.html" class="evento-link">
+    <h2><span class="neon-parpadeo">Evento en vivo</span></h2>
+    <div class="evento-box">
+    		<img src="https://www.tkd.co.uk/images/bank/october2024_nationals-digital-poster.jpg" alt="Torneo Nacional">
+      <p>⚡ Torneo Nacional en curso</p>
+      <p>📍 Estadio Luna Park</p>
+      <p>⏱️ En vivo: 15:00 - 18:00</p>
+    </div>
+	</a>
+  </div>
+
+  <div class="columna-derecha">
+
+    <h2>Próximos eventos</h2>
+    <div class="evento-box">
+    	<img src="https://www.taekwondo.com.pe/wp-content/uploads/2020/02/Poster-Guayaquil-2020.jpg" alt="Copa Metropolitana">
+      <p>🏆 Copa Metropolitana</p>
+      <p>📅 Sábado 13 de julio</p>
+      <p>📍 Club Huracán</p>
+    </div>
+    <!-- Podés agregar más eventos abajo -->
+  </div>
+</section>
+
+
+
+  <section id="reglamentos" class="fade-up">
+    <h2>Reglamentos Oficiales</h2>
+    <p>Conocé las reglas ITF para cada categoría y modalidad.</p>
+    <a href="#" class="btn">Ver Reglamentos</a>
+  </section>
+
+  <section id="atletas" class="fade-up">
+    <h2>Atletas Destacados</h2>
+    <div class="atleta-grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1584467735871-36c9ef634b0e?auto=format&fit=crop&w=800&q=60" alt="Atleta 1">
+        <h4>Lucas Martínez</h4>
+        <p>Campeón Nacional</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1620241072691-1b3611f8b5d7?auto=format&fit=crop&w=800&q=60" alt="Atleta 2">
+        <h4>Carla Gómez</h4>
+        <p>Representante Internacional</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="torneos" class="fade-up">
+    <h2>Torneos</h2>
+    <ul>
+      <li>⚔️ Torneo Metropolitano – Abril 2025</li>
+      <li>⚔️ Copa del Sur – Junio 2025</li>
+      <li>⚔️ Selectivo Nacional – Octubre 2025</li>
+    </ul>
+  </section>
+
+  <section id="inscripciones" class="fade-up">
+    <h2>Formulario de Inscripción</h2>
+    <form>
+      <input type="text" placeholder="Nombre completo" required />
+      <input type="email" placeholder="Email" required />
+      <select required>
+        <option value="">Seleccione categoría</option>
+        <option>Infantil</option>
+        <option>Juvenil</option>
+        <option>Adulto</option>
+      </select>
+      <button type="submit" class="btn">Inscribirme</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TaeKwon-Do Total | Contacto: info@tkdtotal.com</p>
+  </footer>
+
+
+
+
+</body>
+</html>
