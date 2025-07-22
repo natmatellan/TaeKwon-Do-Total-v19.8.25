@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Combate Total</title>
+  <style>
+    /* ... (aquí iría todo tu CSS original sin cambios, que ya tenías bien armado) ... */
+  </style>
+</head>
+<body>
+  <!-- ... (aquí iría todo tu HTML original sin cambios, que ya tenías bien armado) ... -->
+
+<script>
+let ultimoSegundoBipeado = null;
+let rounds = 2;
+let descanso = 0.5;
+let duracion = 1;
+let tiempoRestante = duracion * 60 * 1000;
+let tiempoAcumulado = tiempoRestante;
+let tiempoInicio = 0;
+let roundActual = 1;
+let enDescanso = false;
+let tiempoDescanso = descanso * 60 * 1000;
+let tiempoDescansoRestante = tiempoDescanso;
+let tiempoDescansoInicio = 0;
+let intervaloDescanso;
+const sonido10sec = new Audio("/sounds/10sec.mp3");
+const sonidoRound = new Audio("/sounds/startEndRound.mp3");
+const sonidoFinPelea = new Audio("/sounds/endFight.mp3");
+let yaSonoStartEnd = false;
+let yaSonoFinPelea = false;
+
+// ... (todo tu código original se mantiene, excepto las funciones modificadas que ya corregimos) ...
+
+// Actualizadas:
+const iniciar = () => {
+  if (corriendo || menuAbierto) return;
+  guardarHistorial();
+  corriendo = true;
+  tiempoInicio = Date.now();
+
+  if (!yaSonoStartEnd && roundActual <= rounds) {
+    sonidoRound.currentTime = 0;
+    sonidoRound.play();
+    yaSonoStartEnd = true;
+  }
+
+  intervalo = setInterval(() => {
+    const transcurrido = Date.now() - tiempoInicio;
+    tiempoRestante = tiempoAcumulado - transcurrido;
+
+    if (tiempoRestante <= 0) {
+      tiempoRestante = 0;
+      clearInterval(intervalo);
+      corriendo = false;
+      actualizarDisplay();
+
+      if (roundActual < rounds) {
+        yaSonoStartEnd = false;
+        iniciarDescanso();
+      } else {
+        if (!yaSonoFinPelea) {
+          sonidoFinPelea.currentTime = 0;
+          sonidoFinPelea.play();
+          yaSonoFinPelea = true;
+        }
+        document.getElementById("titulo-round").textContent = "FIN DE PELEA";
+      }
+
+      return;
+    }
+
+    const segundosRestantes = Math.floor(tiempoRestante / 1000);
+    if (segundosRestantes <= 10 && segundosRestantes !== ultimoSegundoBipeado) {
+      sonido10sec.currentTime = 0;
+      sonido10sec.play();
+      ultimoSegundoBipeado = segundosRestantes;
+    }
+
+    actualizarDisplay();
+  }, 10);
+};
+
+function iniciarDescanso() {
+  enDescanso = true;
+  tiempoDescanso = descanso * 60 * 1000;
+  tiempoDescansoRestante = tiempoDescanso;
+  tiempoDescansoInicio = Date.now();
+  actualizarDescansoDisplay();
+  document.getElementById("cronometro-descanso").classList.remove("oculto");
+
+  intervaloDescanso = setInterval(() => {
+    const transcurrido = Date.now() - tiempoDescansoInicio;
+    tiempoDescansoRestante = tiempoDescanso - transcurrido;
+
+    tiempoDescansoRestante = Math.max(0, Math.round(tiempoDescansoRestante / 10) * 10);
+
+    const segundosDescanso = Math.floor(tiempoDescansoRestante / 1000);
+    if (segundosDescanso <= 10 && segundosDescanso !== ultimoSegundoBipeado) {
+      sonido10sec.currentTime = 0;
+      sonido10sec.play();
+      ultimoSegundoBipeado = segundosDescanso;
+    }
+
+    if (tiempoDescansoRestante <= 0) {
+      clearInterval(intervaloDescanso);
+      tiempoDescansoRestante = 0;
+      enDescanso = false;
+      document.getElementById("cronometro-descanso").classList.add("oculto");
+      yaSonoStartEnd = false;
+      if (roundActual <= rounds) {
+        iniciarProximoRound();
+      }
+    }
+
+    actualizarDescansoDisplay();
+  }, 10);
+}
+
+// ... (el resto de tu código permanece igual: joystick, teclado, puntajes, etc.) ...
+
+</script>
+</body>
+</html>
