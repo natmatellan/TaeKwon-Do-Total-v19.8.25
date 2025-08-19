@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Evento en Vivo</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0d0d0d, #1f1f1f);
+      font-family: 'Segoe UI', sans-serif;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00bfff;
+      text-shadow: 0 0 12px #00bfff, 0 0 24px #0088ff;
+      margin-top: 30px;
+      font-size: 2.8rem;
+    }
+
+    .dashboard {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .panel {
+      background: radial-gradient(circle at top left, #2b2b2b, #1a1a1a);
+      border: 2px solid #00bfff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow:
+        0 0 20px rgba(0, 191, 255, 0.5),
+        inset 0 0 20px rgba(0, 191, 255, 0.1);
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+      transform: perspective(1000px) rotateX(2deg);
+    }
+
+    .panel:hover {
+      transform: scale(1.03) rotateX(0deg);
+      box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.6),
+        inset 0 0 30px rgba(0, 191, 255, 0.2);
+    }
+
+    .panel h2 {
+      color: #00bfff;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+      text-shadow: 0 0 8px #00bfff;
+    }
+
+    .panel p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+
+    .boton {
+      display: inline-block;
+      background: linear-gradient(145deg, #00bfff, #0099cc);
+      color: #000;
+      padding: 14px 28px;
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00bfff;
+      transition: all 0.3s ease;
+    }
+
+    .boton:hover {
+      background: #00a0e0;
+      box-shadow: 0 0 20px #00eaff;
+      transform: scale(1.05);
+    }
+
+    body::before {
+  content: "";
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 2px solid #00bfff;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow:
+    0 0 20px #00bfff,
+    0 0 40px rgba(0, 191, 255, 0.3),
+    inset 0 0 30px rgba(0, 191, 255, 0.1);
+  animation: parpadeo-borde 2s infinite alternate;
+}
+
+@keyframes parpadeo-borde {
+  0% {
+    box-shadow:
+      0 0 10px #00bfff,
+      0 0 20px rgba(0, 191, 255, 0.2),
+      inset 0 0 15px rgba(0, 191, 255, 0.1);
+  }
+  100% {
+    box-shadow:
+      0 0 20px #00bfff,
+      0 0 40px rgba(0, 191, 255, 0.4),
+      inset 0 0 30px rgba(0, 191, 255, 0.2);
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Torneo en Vivo - Panel Central</h1>
+
+  <section class="dashboard">
+    <!-- Panel de resumen -->
+    <div class="panel">
+      <h2>📊 Resumen</h2>
+      <p>Categorías: <strong>12</strong></p>
+      <p>Competidores: <strong>178</strong></p>
+      <p>Coaches: <strong>24</strong></p>
+      <p>Áreas activas: <strong>4</strong></p>
+      <p>Completado: <strong>68%</strong></p>
+    </div>
+
+
+
+    <!-- Acreditaciones -->
+    <div class="panel">
+      <h2>🛂 Acreditaciones</h2>
+      <p>Finalizadas: <strong>164</strong></p>
+      <p>Pendientes: <strong>46</strong></p>
+	  <button class="boton" onclick="window.location.href='acreditaciones.html'">Gestionar</button>
+
+    </div>
+
+    <!-- Iniciar torneo -->
+    <div class="panel">
+      <h2>🚀 Iniciar Torneo</h2>
+      <p>Estado: <strong>En preparación</strong></p>
+	<button class="boton" onclick="window.location.href='TTT.html'">Iniciar ahora</button>
+    </div>
+  </section>
+
+<audio id="sonido-hover" src="sounds/hover.mp3" preload="auto"></audio>
+<audio id="sonido-click" src="sounds/click.mp3" preload="auto"></audio>
+
+<script>
+  const hoverSound = document.getElementById("sonido-hover");
+  const clickSound = document.getElementById("sonido-click");
+
+  document.querySelectorAll('.boton').forEach(boton => {
+    boton.addEventListener('mouseenter', () => {
+      hoverSound.currentTime = 0;
+      hoverSound.volume = 0.3;
+      hoverSound.play();
+    });
+
+    boton.addEventListener('click', () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    });
+  });
+</script>
+
+
+</body>
+</html>
